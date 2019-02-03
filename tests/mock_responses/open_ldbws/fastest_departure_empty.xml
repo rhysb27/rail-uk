@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <GetFastestDeparturesResponse xmlns="http://thalesgroup.com/RTTI/2016-02-16/ldb/">
+            <DeparturesBoard xmlns:lt="http://thalesgroup.com/RTTI/2012-01-13/ldb/types"
+                             xmlns:lt6="http://thalesgroup.com/RTTI/2017-02-02/ldb/types"
+                             xmlns:lt7="http://thalesgroup.com/RTTI/2017-10-01/ldb/types"
+                             xmlns:lt4="http://thalesgroup.com/RTTI/2015-11-27/ldb/types"
+                             xmlns:lt5="http://thalesgroup.com/RTTI/2016-02-16/ldb/types"
+                             xmlns:lt2="http://thalesgroup.com/RTTI/2014-02-20/ldb/types"
+                             xmlns:lt3="http://thalesgroup.com/RTTI/2015-05-14/ldb/types">
+                <lt4:generatedAt>2019-03-03T11:36:54.5029142+00:00</lt4:generatedAt>
+                <lt4:locationName>{{ req_vars["origin_name"] }}</lt4:locationName>
+                <lt4:crs>{{ req_vars["origin_crs"] }}</lt4:crs>
+                <lt4:platformAvailable>true</lt4:platformAvailable>
+                <lt5:departures>
+                    <lt5:destination crs="{{ req_vars["destination_crs"] }}">
+                        <lt5:service xsi:nil="true" />
+                    </lt5:destination>
+                </lt5:departures>
+            </DeparturesBoard>
+        </GetFastestDeparturesResponse>
+    </soap:Body>
+</soap:Envelope>

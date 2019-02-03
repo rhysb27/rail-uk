@@ -1,0 +1,18 @@
+venv/
+**/__pycache__/
+.coverage
+
+# OS/IDE stuff
+.DS_Store
+.idea/
+.vscode/
+
+# Sensitive project files
+alexa_sim.py
+.env
+
+# Large unnecessary files
+deploy.zip
+dependencies.zip
+
+#TODO: Ignore test stuff

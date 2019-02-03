@@ -1,0 +1,138 @@
+{
+  "date": "2019-01-30",
+  "time_of_day": "22:00",
+  "request_time": "2019-01-31T21:01:51+00:00",
+  "station_name": "{{ name }}",
+  "station_code": "{{ crs }}",
+  "departures": {
+    "all": [
+
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P68349",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "20:28",
+        "aimed_arrival_time": "20:28",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P68349/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P66817",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "20:43",
+        "aimed_arrival_time": "20:43",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P66817/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P67248",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "20:58",
+        "aimed_arrival_time": "20:58",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P67248/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P67685",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "21:08",
+        "aimed_arrival_time": "21:08",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P67685/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P67250",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "21:28",
+        "aimed_arrival_time": "21:28",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P67250/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P67111",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "21:47",
+        "aimed_arrival_time": "21:46",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P67111/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      },
+      {
+        "mode": "train",
+        "service": "12272820",
+        "train_uid": "P67246",
+        "platform": "1",
+        "operator": "LM",
+        "operator_name": "Train Operator Limited",
+        "aimed_departure_time": "22:00",
+        "aimed_arrival_time": "22:00",
+        "aimed_pass_time": null,
+        "origin_name": "Train Town",
+        "destination_name": "Train City",
+        "source": "ATOC",
+        "category": "OO",
+        "service_timetable": {
+          "id": "https://transportapi.com/v3/uk/train/service/train_uid:P67246/2019-01-30/timetable.json?app_id=TEST_ID&app_key=TEST_KEY"
+        }
+      }
+    ]
+  }
+}

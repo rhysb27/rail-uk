@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <GetDepartureBoardResponse xmlns="http://thalesgroup.com/RTTI/2016-02-16/ldb/">
+            <GetStationBoardResult xmlns:lt="http://thalesgroup.com/RTTI/2012-01-13/ldb/types"
+                                   xmlns:lt6="http://thalesgroup.com/RTTI/2017-02-02/ldb/types"
+                                   xmlns:lt7="http://thalesgroup.com/RTTI/2017-10-01/ldb/types"
+                                   xmlns:lt4="http://thalesgroup.com/RTTI/2015-11-27/ldb/types"
+                                   xmlns:lt5="http://thalesgroup.com/RTTI/2016-02-16/ldb/types"
+                                   xmlns:lt2="http://thalesgroup.com/RTTI/2014-02-20/ldb/types"
+                                   xmlns:lt3="http://thalesgroup.com/RTTI/2015-05-14/ldb/types">
+                <lt4:generatedAt>2019-02-20T19:50:10.3215249+00:00</lt4:generatedAt>
+                <lt4:locationName>{{ req_vars["origin_name"] }}</lt4:locationName>
+                <lt4:crs>{{ req_vars["origin_crs"] }}</lt4:crs>
+                <lt4:filterLocationName>{{ req_vars["destination_name"] }}</lt4:filterLocationName>
+                <lt4:filtercrs>{{ req_vars["destination_crs"] }}</lt4:filtercrs>
+                <lt4:platformAvailable>true</lt4:platformAvailable>
+                <lt5:trainServices>
+                    <lt5:service>
+                        <lt4:std>22:00</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>JNn2FtFnckqMyXrZD3Bptg==</lt4:serviceID>
+                        <lt5:rsid>LM123200</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>Train City</lt4:locationName>
+                                <lt4:crs>TCX</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>20:08</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>2GXTzBHRuRo88FLYDcJB2g==</lt4:serviceID>
+                        <lt5:rsid>LM123300</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>Train City</lt4:locationName>
+                                <lt4:crs>TCX</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>20:18</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>GYKcmYsBx+dwLPUpdRKEQg==</lt4:serviceID>
+                        <lt5:rsid>LM123400</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>{{ req_vars["destination_name"] }}</lt4:locationName>
+                                <lt4:crs>{{ req_vars["destination_crs"] }}</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>20:28</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>2du6jb0PdGuuQpDtCCdrNw==</lt4:serviceID>
+                        <lt5:rsid>LM168300</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>Train City</lt4:locationName>
+                                <lt4:crs>TCX</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>20:43</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>XUq3nnpIsik0iNS6laKiqQ==</lt4:serviceID>
+                        <lt5:rsid>LM123500</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>{{ req_vars["destination_name"] }}</lt4:locationName>
+                                <lt4:crs>{{ req_vars["destination_crs"] }}</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>20:58</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>Ulnd0WU7bK0qePE0/Rv7aw==</lt4:serviceID>
+                        <lt5:rsid>LM168800</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>Train City</lt4:locationName>
+                                <lt4:crs>TCX</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>21:13</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>Z7uW4GLWA0Ga6v0oRvyDcQ==</lt4:serviceID>
+                        <lt5:rsid>LM123600</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>{{ req_vars["destination_name"] }}</lt4:locationName>
+                                <lt4:crs>{{ req_vars["destination_crs"] }}</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>21:28</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>Gk6gmmusprYDLx2KJXE3Rw==</lt4:serviceID>
+                        <lt5:rsid>LM169300</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>Train City</lt4:locationName>
+                                <lt4:crs>TCX</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>21:43</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>F29DPm366ojVASvNxs9HwQ==</lt4:serviceID>
+                        <lt5:rsid>LM123700</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>{{ req_vars["destination_name"] }}</lt4:locationName>
+                                <lt4:crs>{{ req_vars["destination_crs"] }}</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                    <lt5:service>
+                        <lt4:std>21:55</lt4:std>
+                        <lt4:etd>On time</lt4:etd>
+                        <lt4:platform>1</lt4:platform>
+                        <lt4:operator>Train Operator Limited</lt4:operator>
+                        <lt4:operatorCode>TOL</lt4:operatorCode>
+                        <lt4:serviceType>train</lt4:serviceType>
+                        <lt4:serviceID>F29DPm366ojVASvNxs9HwQ==</lt4:serviceID>
+                        <lt5:rsid>LM123700</lt5:rsid>
+                        <lt5:origin>
+                            <lt4:location>
+                                <lt4:locationName>Elsewhere</lt4:locationName>
+                                <lt4:crs>ELS</lt4:crs>
+                            </lt4:location>
+                        </lt5:origin>
+                        <lt5:destination>
+                            <lt4:location>
+                                <lt4:locationName>{{ req_vars["destination_name"] }}</lt4:locationName>
+                                <lt4:crs>{{ req_vars["destination_crs"] }}</lt4:crs>
+                            </lt4:location>
+                        </lt5:destination>
+                    </lt5:service>
+                </lt5:trainServices>
+            </GetStationBoardResult>
+        </GetDepartureBoardResponse>
+    </soap:Body>
+</soap:Envelope>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+               xmlns:typ="http://thalesgroup.com/RTTI/2013-11-28/Token/types"
+               xmlns:ldb="http://thalesgroup.com/RTTI/2016-02-16/ldb/">
+   <soap:Header>
+      <typ:AccessToken>
+         <typ:TokenValue>{{ req_vars["access_token"] }}</typ:TokenValue>
+      </typ:AccessToken>
+   </soap:Header>
+   <soap:Body>
+      <ldb:GetDepartureBoardRequest>
+         <ldb:crs>{{ req_vars["origin"] }}</ldb:crs>
+         <ldb:filterCrs>{{ req_vars["destination"] }}</ldb:filterCrs>
+         <ldb:timeOffset>{{ req_vars["time_offset"] }}</ldb:timeOffset>
+         <ldb:timeWindow>{{ req_vars["time_window"] }}</ldb:timeWindow>
+         <ldb:numRows>10</ldb:numRows>
+      </ldb:GetDepartureBoardRequest>
+   </soap:Body>
+</soap:Envelope>

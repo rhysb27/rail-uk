@@ -20,3 +20,8 @@ class DynamoDBError(Error):
 class ApplicationError(Error):
     """Raised when an unknown error occurs."""
     pass
+
+
+class StationNotFoundError(Error):
+    """Raised when Alexa fails to resolve a requested station"""
+    pass

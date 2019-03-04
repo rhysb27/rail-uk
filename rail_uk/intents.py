@@ -1,6 +1,7 @@
 import logging
 
 from rail_uk.dtos import Station, APIParameters, HomeStation
+from rail_uk.exceptions import StationNotFoundError
 from rail_uk import data
 from rail_uk import dynamodb
 
@@ -29,7 +30,7 @@ def handle_session_end_request():
 def get_api_error_response():
     session_attributes = {}
 
-    speech = 'Sorry, a problem occurred with one of our data providers. Please try again later ' \
+    speech = 'I\'m sorry, a problem occurred with one of our data providers. Please try again later ' \
              'and let us know if the problem persists.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -39,7 +40,7 @@ def get_api_error_response():
 def get_db_error_response():
     session_attributes = {}
 
-    speech = 'Sorry, a problem occurred with our data storage provider. Departure queries should still be ' \
+    speech = 'I\'m sorry, a problem occurred with our data storage provider. Departure queries should still be ' \
              'functional. Please try again later and let us know if the problem persists.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -49,11 +50,22 @@ def get_db_error_response():
 def get_error_response():
     session_attributes = {}
 
-    speech = 'Sorry, something seems to have gone wrong with this skill. We are probably already working on ' \
+    speech = 'I\'m sorry, something seems to have gone wrong with this skill. We are probably already working on ' \
              'fixing the problem, but if this happens again please let us know.'
 
     return build_response(session_attributes, build_speechlet_response(
         speech, reprompt=None, should_end_session=True))
+
+
+def get_station_not_found_response(slot_name):
+    session_attributes = {}
+
+    speech = 'I\'m sorry, I didn\'t recognise the station you specified for {}. We\'re working on improving our ' \
+             'recognition at this very moment and will release an update soon. In the meantime, please try again.'\
+        .format(slot_name)
+
+    return build_response(session_attributes, build_speechlet_response(
+        speech, reprompt=None, should_end_session=False))
 
 
 # ----------------------------- Complex Responses -----------------------------
@@ -127,6 +139,9 @@ def get_parameters(intent, session):
 
         origin = home.station
         offset = home.distance
+    elif origin_from_slot.crs is None:
+        # TODO: Deal with this properly.
+        return None
     else:
         origin = origin_from_slot
         offset = 0
@@ -137,13 +152,20 @@ def get_parameters(intent, session):
 
 
 def get_station_from_slot(intent, slot_name):
-    try:
-        slot = intent['slots'][slot_name]['resolutions']['resolutionsPerAuthority'][0]['values'][0]['value']
-        station = Station(slot['name'], slot['id'])
-        logger.debug('Station slot value found ({}): {} '.format(slot_name, station))
-        return station
-    except KeyError:
-        logger.warning('Slot value not found: ' + slot_name)
+    if slot_name in intent['slots']:
+        slot = intent['slots'][slot_name]
+        try:
+            resolved_slot = slot['resolutions']['resolutionsPerAuthority'][0]['values'][0]['value']
+            station = Station(resolved_slot['name'], resolved_slot['id'])
+            logger.debug('Station slot value found ({}): {} '.format(slot_name, station))
+            return station
+        except KeyError:
+            raw_value = slot['value']
+            logger.warning('"{}" slot value not resolved: "{}"'.format(slot_name, raw_value))
+            raise StationNotFoundError(slot_name)
+            # return Station(raw_value, None)
+    else:
+        logger.warning('"{}" slot not found'.format(slot_name))
         return None
 
 

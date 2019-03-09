@@ -3,8 +3,8 @@ import logging
 
 from rail_uk.events import on_launch, on_intent
 
-logger = logging.getLogger(__name__)
 logging.basicConfig(level=environ.get('LOG_LEVEL', 'WARNING'))
+logger = logging.getLogger(__name__)
 
 
 def lambda_handler(event, _):

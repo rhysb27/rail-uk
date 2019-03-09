@@ -30,21 +30,21 @@ class TestIntents(TestCase):
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)
 
     def test_get_api_error_response(self):
-        expected_speech = 'Sorry, a problem occurred with one of our data providers. Please try again later ' \
+        expected_speech = 'I\'m sorry, a problem occurred with one of our data providers. Please try again later ' \
              'and let us know if the problem persists.'
 
         response = intents.get_api_error_response()
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)
 
     def test_get_db_error_response(self):
-        expected_speech = 'Sorry, a problem occurred with our data storage provider. Departure queries should ' \
+        expected_speech = 'I\'m sorry, a problem occurred with our data storage provider. Departure queries should ' \
                 'still be functional. Please try again later and let us know if the problem persists.'
 
         response = intents.get_db_error_response()
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)
 
     def test_get_error_response(self):
-        expected_speech = 'Sorry, something seems to have gone wrong with this skill. We are probably already ' \
+        expected_speech = 'I\'m sorry, something seems to have gone wrong with this skill. We are probably already ' \
                 'working on fixing the problem, but if this happens again please let us know.'
 
         response = intents.get_error_response()

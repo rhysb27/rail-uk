@@ -22,6 +22,11 @@ class ApplicationError(Error):
     pass
 
 
-class StationNotFoundError(Error):
-    """Raised when Alexa fails to resolve a requested station"""
+class EntityResolutionError(Error):
+    """Raised when both Alexa and RailUK fail to resolve a requested station"""
+    pass
+
+
+class AmbiguousERError(Error):
+    """Raised Entity Resolution provided ambiguous results"""
     pass

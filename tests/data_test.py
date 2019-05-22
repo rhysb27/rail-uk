@@ -1,10 +1,9 @@
-import logging
 from unittest import TestCase
 from unittest.mock import patch, Mock
 from datetime import datetime
 
 from rail_uk import data
-from rail_uk.dtos import Station, APIParameters, DepartureInfo
+from rail_uk.dtos import Station, APIParameters
 from rail_uk.exceptions import ApplicationError, OpenLDBWSError, TransportAPIError
 from helpers import helpers
 
@@ -12,7 +11,6 @@ from helpers import helpers
 class TestData(TestCase):
 
     def setUp(self):
-        logging.basicConfig(level='DEBUG')
         self.mock_env = helpers.get_test_env()
         self.mock_env.start()
 

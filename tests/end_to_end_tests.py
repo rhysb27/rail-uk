@@ -1,8 +1,7 @@
-import logging
 from os import environ
 from jinja2 import Environment, FileSystemLoader
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 from lambda_entry import lambda_handler
 from helpers import helpers
@@ -11,15 +10,16 @@ from helpers import helpers
 class TestEndToEnd(TestCase):
 
     def setUp(self):
-        logging.basicConfig(level='DEBUG')
         self.mock_env = helpers.get_test_env()
         self.mock_env.start()
         self.default_slots = {
             'destination': {
+                'resolved': True,
                 'name': 'Train Town',
                 'id': 'TTX'
             },
             'origin': {
+                'resolved': True,
                 'name': 'Home Town',
                 'id': 'HTX'
             }
@@ -29,12 +29,48 @@ class TestEndToEnd(TestCase):
         self.mock_env.stop()
 
     @patch('rail_uk.data.make_soap_request')
-    def test_fastest_train(self, mock_request):
+    def test_fastest_train_happy_path(self, mock_request):
         mock_request.return_value = _mock_soap_response(self.default_slots, 'open_ldbws', 'fastest_departure.xml')
         response = lambda_handler(_make_mock_event('FastestTrain', self.default_slots), None)
         speech = response['response']['outputSpeech']['text']
         expected_speech = 'The fastest train to Train Town from Home Town is the 22:00 Train Operator Limited ' \
                           'service to Train City, which is running on time.'
+        self.assertEqual(speech, expected_speech)
+        self.assertTrue(False)
+
+    @patch('rail_uk.data.make_soap_request')
+    @patch('boto3.resource')
+    def test_fastest_train_use_home_station(self, mock_boto3, mock_request):
+        mock_table = Mock()
+        mock_response = helpers.generate_test_dynamodb_get_response()
+        mock_table.get_item.return_value = mock_response
+        mock_boto3.return_value.Table.return_value = mock_table
+        mock_request.return_value = _mock_soap_response(self.default_slots, 'open_ldbws', 'fastest_departure.xml')
+
+        test_slots = {
+            'destination': self.default_slots['destination'],
+            'origin': None
+        }
+        response = lambda_handler(_make_mock_event('FastestTrain', test_slots), None)
+        speech = response['response']['outputSpeech']['text']
+        expected_speech = 'The fastest train to Train Town from Home Town is the 22:00 Train Operator Limited ' \
+                          'service to Train City, which is running on time.'
+        self.assertEqual(speech, expected_speech)
+
+    @patch('rail_uk.data.make_soap_request')
+    def test_fastest_train_use_backup_er(self, mock_request):
+        mock_request.return_value = _mock_soap_response(self.default_slots, 'open_ldbws', 'fastest_departure.xml')
+        test_slots = {
+            'destination': self.default_slots['destination'],
+            'origin': {
+                'resolved': False,
+                'raw': 'birmingham you street'
+            }
+        }
+        response = lambda_handler(_make_mock_event('FastestTrain', test_slots), None)
+        speech = response['response']['outputSpeech']['text']
+        expected_speech = 'The fastest train to Train Town from Birmingham New Street is the 22:00 Train Operator ' \
+                          'Limited service to Train City, which is running on time.'
         self.assertEqual(speech, expected_speech)
 
     @patch('rail_uk.data.make_soap_request')
@@ -108,16 +144,34 @@ def _expand_slots(intent_slots_):
 
 
 def _expand_slot(slot_name, slot_values):
-    return {
-        'name': slot_name,
-        'resolutions': {
-            'resolutionsPerAuthority': [{
-                'values': [{
-                    'value': slot_values
-                }]
-            }]
+    if slot_values is None:
+        return {
+            'name': slot_name
         }
-    }
+    elif slot_values['resolved']:
+        return {
+            'name': slot_name,
+            'value': slot_values['name'],
+            'resolutions': {
+                'resolutionsPerAuthority': [{
+                    'values': [{
+                        'value': slot_values
+                    }]
+                }]
+            }
+        }
+    else:
+        return {
+            'name': slot_name,
+            'value': slot_values['raw'],
+            'resolutions': {
+                'resolutionsPerAuthority': [{
+                    'status': {
+                        'code': 'ER_SUCCESS_NO_MATCH'
+                    }
+                }]
+            }
+        }
 
 
 def _mock_soap_response(intent_slots_, data_source, template_file):

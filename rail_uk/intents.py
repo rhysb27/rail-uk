@@ -1,7 +1,9 @@
 import logging
+from fuzzywuzzy import fuzz, process
+
 
 from rail_uk.dtos import Station, APIParameters, HomeStation
-from rail_uk.exceptions import StationNotFoundError
+from rail_uk.exceptions import EntityResolutionError, AmbiguousERError
 from rail_uk import data
 from rail_uk import dynamodb
 
@@ -50,7 +52,7 @@ def get_db_error_response():
 def get_error_response():
     session_attributes = {}
 
-    speech = 'I\'m sorry, something seems to have gone wrong with this skill. We are probably already working on ' \
+    speech = 'I\'m sorry, something seems to have gone wrong with this skill. We will work on ' \
              'fixing the problem, but if this happens again please let us know.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -60,8 +62,8 @@ def get_error_response():
 def get_station_not_found_response(slot_name):
     session_attributes = {}
 
-    speech = 'I\'m sorry, I didn\'t recognise the station you specified for {}. We\'re working on improving our ' \
-             'recognition at this very moment and will release an update soon. In the meantime, please try again.'\
+    speech = 'I\'m sorry, I did not recognise the {} station you requested. We are working on improving our ' \
+             'recognition and will release an update soon. In the meantime, please try again.'\
         .format(slot_name)
 
     return build_response(session_attributes, build_speechlet_response(
@@ -86,7 +88,15 @@ def set_home_station(intent, session):
 
 
 def get_fastest_train(intent, session):
-    parameters = get_parameters(intent, session)
+    try:
+        parameters = get_parameters(intent, session)
+    except AmbiguousERError as err:
+        slot_name = err[1]
+        direction = 'to' if slot_name == 'origin' else 'from'
+        message = 'I found {} stations that match the {} you requested. Which specific station would ' \
+                  'you like to travel {}?'.format(err[0], slot_name, direction)
+        return elicit_slot(slot_name, message)
+
     if parameters is None:
         return elicit_slot('origin', 'Which station would you like to travel from?')
 
@@ -100,7 +110,15 @@ def get_fastest_train(intent, session):
 
 
 def get_next_train(intent, session):
-    parameters = get_parameters(intent, session)
+    try:
+        parameters = get_parameters(intent, session)
+    except AmbiguousERError as err:
+        slot_name = err[1]
+        direction = 'to' if slot_name == 'origin' else 'from'
+        message = 'I found {} stations that match the {} you requested. Which specific station would ' \
+                  'you like to travel {}?'.format(err[0], slot_name, direction)
+        return elicit_slot(slot_name, message)
+
     if parameters is None:
         return elicit_slot('origin', 'Which station would you like to travel from?')
 
@@ -114,7 +132,15 @@ def get_next_train(intent, session):
 
 
 def get_last_train(intent, session):
-    parameters = get_parameters(intent, session)
+    try:
+        parameters = get_parameters(intent, session)
+    except AmbiguousERError as err:
+        slot_name = err[1]
+        direction = 'to' if slot_name == 'origin' else 'from'
+        message = 'I found {} stations that match the {} you requested. Which specific station would ' \
+                  'you like to travel {}?'.format(err[0], slot_name, direction)
+        return elicit_slot(slot_name, message)
+
     if parameters is None:
         return elicit_slot('origin', 'Which station would you like to travel from?')
 
@@ -139,34 +165,56 @@ def get_parameters(intent, session):
 
         origin = home.station
         offset = home.distance
-    elif origin_from_slot.crs is None:
-        # TODO: Deal with this properly.
-        return None
     else:
         origin = origin_from_slot
         offset = 0
 
     destination = get_station_from_slot(intent, 'destination')
-
     return APIParameters(origin, destination, offset)
 
 
 def get_station_from_slot(intent, slot_name):
-    if slot_name in intent['slots']:
-        slot = intent['slots'][slot_name]
-        try:
-            resolved_slot = slot['resolutions']['resolutionsPerAuthority'][0]['values'][0]['value']
-            station = Station(resolved_slot['name'], resolved_slot['id'])
-            logger.debug('Station slot value found ({}): {} '.format(slot_name, station))
-            return station
-        except KeyError:
-            raw_value = slot['value']
-            logger.warning('"{}" slot value not resolved: "{}"'.format(slot_name, raw_value))
-            raise StationNotFoundError(slot_name)
-            # return Station(raw_value, None)
-    else:
+    if slot_name not in intent['slots']:
         logger.warning('"{}" slot not found'.format(slot_name))
         return None
+
+    slot = intent['slots'][slot_name]
+    logger.warning('SLOT: ' + str(slot))
+    if 'value' not in slot:
+        logger.warning('"{}" slot not found'.format(slot_name))
+        return None
+
+    resolutions = slot['resolutions']['resolutionsPerAuthority'][0]
+    if 'values' not in resolutions:
+        return resolve_station(slot)
+
+    resolved_slot = resolutions['values'][0]['value']
+    station = Station(resolved_slot['name'], resolved_slot['id'])
+    logger.debug('Station slot value found ({}): {} '.format(slot_name, station))
+    return station
+
+
+def resolve_station(slot, first_attempt=False):
+    # TODO: Catch ambiguityError, track attempts, and set default first_attempt to false
+    stations = {}
+    with open('res/stations.csv') as csv:
+        for row in csv:
+            columns = [x.strip() for x in row.split(',')]
+            stations[columns[0]] = columns[1]
+
+    matches = process.extract(slot['value'], list(stations.keys()), limit=10, scorer=fuzz.token_sort_ratio)
+    best_match = matches[0]
+
+    if first_attempt:
+        scores = [match[1] for match in matches]
+        max_score = best_match[1]
+        ambiguity = scores.count(max_score) + scores.count(max_score - 1) + scores.count(max_score - 2)
+        if ambiguity > 1:
+            raise AmbiguousERError((ambiguity, slot['name']))
+
+    resolved_station = Station(best_match[0], stations[best_match[0]])
+    print(str(resolved_station))
+    return resolved_station
 
 
 def get_slot_value(intent, slot_name):

@@ -1,4 +1,3 @@
-import logging
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -8,9 +7,6 @@ from helpers import helpers
 
 
 class TestIntents(TestCase):
-
-    def setUp(self):
-        logging.basicConfig(level='DEBUG')
 
     # --------------------------- Test Simple Responses ---------------------------
 
@@ -44,8 +40,8 @@ class TestIntents(TestCase):
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)
 
     def test_get_error_response(self):
-        expected_speech = 'I\'m sorry, something seems to have gone wrong with this skill. We are probably already ' \
-                'working on fixing the problem, but if this happens again please let us know.'
+        expected_speech = 'I\'m sorry, something seems to have gone wrong with this skill. We will work on fixing ' \
+                'the problem, but if this happens again please let us know.'
 
         response = intents.get_error_response()
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)

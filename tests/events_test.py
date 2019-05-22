@@ -1,4 +1,3 @@
-import logging
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -8,9 +7,6 @@ from helpers import helpers
 
 
 class TestEvents(TestCase):
-
-    def setUp(self):
-        logging.basicConfig(level='DEBUG')
 
     @patch('rail_uk.events.get_welcome_response')
     @patch('rail_uk.events.logger')

@@ -3,7 +3,7 @@ import logging
 from rail_uk.intents import get_next_train, get_fastest_train, get_last_train, set_home_station, get_welcome_response, \
     handle_session_end_request, get_error_response, get_api_error_response, get_db_error_response, \
     get_station_not_found_response
-from rail_uk.exceptions import ApplicationError, OpenLDBWSError, TransportAPIError, DynamoDBError, StationNotFoundError
+from rail_uk.exceptions import ApplicationError, OpenLDBWSError, TransportAPIError, DynamoDBError, EntityResolutionError
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ def on_intent(intent_request, session):
         logger.exception('-[DYNAMODB ERROR]- DynamoDB failed to set/update user details:')
         return get_db_error_response()
 
-    except StationNotFoundError as err:
+    except EntityResolutionError as err:
         logger.exception('-[ALEXA ERROR]- Alexa failed to resolve requested station:')
         return get_station_not_found_response(err)
 

@@ -9,6 +9,7 @@ from rail_uk.dtos import APIParameters, Station, DepartureInfo
 
 def get_test_env():
     return patch.dict(environ, {
+        'LOG_LEVEL': 'DEBUG',
         'SKILL_ID': 'amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'OPEN_LDBWS_ACCESS_TOKEN': 'MOCK_DARWIN_TOKEN',
         'TRANSPORT_API_APP_ID': 'MOCK_APP_ID',
@@ -110,6 +111,20 @@ def generate_test_soap_response(data_source, template_file):
     template_env = Environment(loader=template_loader)
     template = template_env.get_template(template_file)
     return template.render(req_vars=params)
+
+
+def generate_test_dynamodb_get_response():
+    return {
+        'Item': {
+            'UserID': 'existing_user',
+            'distance': '10',
+            'station_crs': 'HTX',
+            'station_name': 'Home Town'
+        },
+        'ResponseMetadata': {
+            'HTTPStatusCode': 200
+        }
+    }
 
 
 # ------------- Incoming request / partial request generators -------------

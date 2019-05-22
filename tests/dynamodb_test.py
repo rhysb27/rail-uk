@@ -5,34 +5,22 @@ from unittest.mock import patch, Mock
 from rail_uk import dynamodb
 from rail_uk.dtos import Station, HomeStation
 from rail_uk.exceptions import DynamoDBError
+from helpers import helpers
 
 
 class TestDynamoDB(TestCase):
 
-    def setUp(self):
-        logging.basicConfig(level='DEBUG')
-
     @patch('boto3.resource')
     def test_get_home_station_success(self, mock_boto3):
         mock_table = Mock()
-        mock_response = {
-            'Item': {
-                'UserID': 'existing_user',
-                'distance': '10',
-                'station_crs': 'FWY',
-                'station_name': 'Five Ways'
-            },
-            'ResponseMetadata': {
-                'HTTPStatusCode': 200
-            }
-        }
+        mock_response = helpers.generate_test_dynamodb_get_response()
         mock_table.get_item.return_value = mock_response
         mock_boto3.return_value.Table.return_value = mock_table
 
         test_user_id = "existing_user"
         result = dynamodb.get_home_station(test_user_id)
 
-        expected_result = HomeStation(Station('Five Ways', 'FWY'), 10)
+        expected_result = HomeStation(Station('Home Town', 'HTX'), 10)
         self.assertEqual(result, expected_result)
 
     @patch('boto3.resource')

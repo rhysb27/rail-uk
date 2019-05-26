@@ -3,21 +3,15 @@ import logging
 
 from rail_uk.events import on_launch, on_intent
 
+logger = logging.getLogger(__name__)
+logger.setLevel(level=environ.get('LOG_LEVEL', 'INFO'))
+
 
 def lambda_handler(event, _):
     """
     Route the incoming request based on type (LaunchRequest, IntentRequest,
     etc.) The JSON body of the request is provided in the event parameter.
     """
-
-    # Configure logging
-    logging.basicConfig(level=environ.get('LOG_LEVEL', 'WARNING'),
-                        format="[ %(levelname)s ] %(asctime)s [%(name)s] %(message)s",
-                        datefmt="%Y-%m-%d %H:%M:%S")
-    logger = logging.getLogger(__name__)
-    logger.warning('Test')
-    logger.info('Test')
-    logger.debug('Test')
 
     # Prevent someone else from configuring a skill that sends requests to this function
     skill_id = environ['SKILL_ID']

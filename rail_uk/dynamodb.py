@@ -1,10 +1,11 @@
 import boto3
 import logging
+from os import environ
 from rail_uk.dtos import Station, HomeStation
 from rail_uk.exceptions import DynamoDBError
 
-
 logger = logging.getLogger(__name__)
+logger.setLevel(level=environ.get('LOG_LEVEL', 'INFO'))
 
 
 def set_home_station(user_id, home_station_details):

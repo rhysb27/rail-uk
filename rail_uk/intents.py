@@ -1,4 +1,5 @@
 import logging
+from os import environ
 from fuzzywuzzy import fuzz, process
 
 
@@ -8,6 +9,7 @@ from rail_uk import data
 from rail_uk import dynamodb
 
 logger = logging.getLogger(__name__)
+logger.setLevel(level=environ.get('LOG_LEVEL', 'INFO'))
 
 
 # ----------------------------- Simple Responses -----------------------------
@@ -24,7 +26,7 @@ def get_welcome_response():
 
 
 def handle_session_end_request():
-    speech = 'Travel safe.'
+    speech = 'Travel safely.'
     return build_response({}, build_speechlet_response(
         speech, reprompt=None, should_end_session=True))
 
@@ -174,18 +176,20 @@ def get_parameters(intent, session):
 
 
 def get_station_from_slot(intent, slot_name):
+    logger.debug('Retrieving {} station from slot'.format(slot_name))
     if slot_name not in intent['slots']:
         logger.warning('"{}" slot not found'.format(slot_name))
         return None
 
     slot = intent['slots'][slot_name]
-    logger.warning('SLOT: ' + str(slot))
+    logger.debug('Slot: {}'.format(slot))
     if 'value' not in slot:
         logger.warning('"{}" slot not found'.format(slot_name))
         return None
 
     resolutions = slot['resolutions']['resolutionsPerAuthority'][0]
     if 'values' not in resolutions:
+        logger.warning('"{}" slot not resolved - will resolve manually'.format(slot_name))
         return resolve_station(slot)
 
     resolved_slot = resolutions['values'][0]['value']

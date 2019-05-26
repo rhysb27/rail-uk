@@ -11,6 +11,7 @@ from rail_uk.exceptions import ApplicationError, OpenLDBWSError, TransportAPIErr
 from rail_uk.dtos import DepartureInfo
 
 logger = logging.getLogger(__name__)
+logger.setLevel(level=environ.get('LOG_LEVEL', 'INFO'))
 
 
 def get_next_departures(params, num_departures=1):

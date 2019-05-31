@@ -20,7 +20,7 @@ class TestIntents(TestCase):
         _test_response(response, expected_speech, expected_reprompt, should_end_session=False)
 
     def test_handle_session_end_request(self):
-        expected_speech = 'Travel safe.'
+        expected_speech = 'Travel safely.'
 
         response = intents.handle_session_end_request()
         _test_response(response, expected_speech, expected_reprompt=None, should_end_session=True)

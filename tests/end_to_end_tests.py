@@ -36,7 +36,6 @@ class TestEndToEnd(TestCase):
         expected_speech = 'The fastest train to Train Town from Home Town is the 22:00 Train Operator Limited ' \
                           'service to Train City, which is running on time.'
         self.assertEqual(speech, expected_speech)
-        self.assertTrue(False)
 
     @patch('rail_uk.data.make_soap_request')
     @patch('boto3.resource')

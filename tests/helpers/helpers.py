@@ -139,7 +139,7 @@ def generate_test_intent():
             },
             "home": {
                 "name": "home",
-                "value": "5 ways",
+                "value": "home town",
                 "resolutions": {
                     "resolutionsPerAuthority": [{
                         "values": [{

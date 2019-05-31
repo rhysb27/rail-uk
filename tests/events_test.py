@@ -70,7 +70,7 @@ class TestEvents(TestCase):
         test_request, test_session = helpers.generate_test_data(intent=True, intent_name="NextTrain")
         response = events.on_intent(test_request, test_session)
 
-        mock_logger.exception.assert_called_with('-[API ERROR]- Underlying API failed:')
+        mock_logger.exception.assert_called_with('-[API ERROR]- Upstream API failed:')
         self.assertEqual(response_str, response)
 
     @patch('rail_uk.events.get_db_error_response')
@@ -96,7 +96,7 @@ class TestEvents(TestCase):
         test_request, test_session = helpers.generate_test_data(intent=True, intent_name="NotYetImplementedIntent")
         response = events.on_intent(test_request, test_session)
 
-        mock_logger.exception.assert_called_with('-[RAIL UK ERROR]- Rail UK ran into an exception:')
+        mock_logger.exception.assert_called_with('-[RAIL UK ERROR]- Rail UK encountered an exception:')
         self.assertEqual(response_str, response)
 
 

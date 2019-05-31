@@ -23,7 +23,7 @@ class TestLambdaHandler(TestCase):
         self.assertEqual('Invalid Application ID', str(context.exception))
 
     @patch('rail_uk.lambda_handler.on_launch')
-    @patch('rail_uk.lambda_handler.logging')
+    @patch('rail_uk.lambda_handler.logger')
     def test_lambda_handler_launch_request(self, mock_logger, mock_event):
         mock_response = 'Welcome to Rail UK!'
         mock_event.return_value = mock_response
@@ -42,7 +42,7 @@ class TestLambdaHandler(TestCase):
         mock_intent.assert_called_with(test_event['request'], test_event['session'])
         self.assertEqual(response, mock_response)
 
-    @patch('rail_uk.lambda_handler.logging')
+    @patch('rail_uk.lambda_handler.logger')
     def test_lambda_handler_session_ended_request(self, mock_logger):
         test_event = helpers.generate_test_event('SessionEndedRequest')
         lambda_handler.lambda_handler(test_event, {})

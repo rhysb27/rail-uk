@@ -34,7 +34,7 @@ def handle_session_end_request():
 def get_api_error_response():
     session_attributes = {}
 
-    speech = 'I\'m sorry, a problem occurred with one of our data providers. Please try again later ' \
+    speech = 'Sorry, a problem occurred with one of our data providers. Please try again later ' \
              'and let us know if the problem persists.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -44,7 +44,7 @@ def get_api_error_response():
 def get_db_error_response():
     session_attributes = {}
 
-    speech = 'I\'m sorry, a problem occurred with our data storage provider. Departure queries should still be ' \
+    speech = 'Sorry, a problem occurred with our data storage provider. Departure queries should still be ' \
              'functional. Please try again later and let us know if the problem persists.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -54,7 +54,7 @@ def get_db_error_response():
 def get_error_response():
     session_attributes = {}
 
-    speech = 'I\'m sorry, something seems to have gone wrong with this skill. We will work on ' \
+    speech = 'Sorry, something seems to have gone wrong with this skill. We will work on ' \
              'fixing the problem, but if this happens again please let us know.'
 
     return build_response(session_attributes, build_speechlet_response(
@@ -64,7 +64,7 @@ def get_error_response():
 def get_station_not_found_response(slot_name):
     session_attributes = {}
 
-    speech = 'I\'m sorry, I did not recognise the {} station you requested. We are working on improving our ' \
+    speech = 'Sorry, the {} station you requested was not recognised. We are working on improving our ' \
              'recognition and will release an update soon. In the meantime, please try again.'\
         .format(slot_name)
 

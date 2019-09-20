@@ -28,5 +28,5 @@ class EntityResolutionError(Error):
 
 
 class AmbiguousERError(Error):
-    """Raised Entity Resolution provided ambiguous results"""
+    """Raised when ntity Resolution provided ambiguous results"""
     pass

@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from rail_uk import events
-from rail_uk.exceptions import OpenLDBWSError, DynamoDBError
+from rail_uk.exceptions import OpenLDBWSError, DynamoDBError, EntityResolutionError
 from helpers import helpers
 
 
@@ -99,27 +99,11 @@ class TestEvents(TestCase):
         mock_logger.exception.assert_called_with('-[RAIL UK ERROR]- Rail UK encountered an exception:')
         self.assertEqual(response_str, response)
 
-
-# def helpers.generate_test_data(intent=False, intent_name=None):
-#     if intent:
-#         test_request = {
-#             'type': 'IntentRequest',
-#             'requestId': 'amzn1.echo-api.request.TEST',
-#             'intent': {
-#                 'name': intent_name,
-#             },
-#         }
-#     else:
-#         test_request = {
-#             'requestId': 'amzn1.echo-api.request.TEST'
-#         }
-#     test_session = {
-#         'sessionId': 'amzn1.echo-api.session.TEST',
-#         'application': {
-#             'applicationId': 'amzn1.ask.skill.TEST'
-#         },
-#         'user': {
-#             'userId': 'amzn1.ask.account.TEST'
-#         }
-#     }
-#     return test_request, test_session
+    @patch('rail_uk.events.logger')
+    @patch('rail_uk.events.get_next_train')
+    @patch('rail_uk.events.get_station_not_found_response')
+    def test_on_intent_er_error(self, mock_response, mock_intent, mock_logger):
+        response_str = 'Sorry, the origin station you requested was not recognised.'
+        mock_intent.side_effect = EntityResolutionError('RailUK failed to disambiguate requested station')
+        response_str = ''
+        mock_response.return_value = get_station_not_found_response
